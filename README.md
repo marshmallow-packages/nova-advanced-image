@@ -1,15 +1,10 @@
 # Nova Advanced Image Field
 
-[![StyleCI](https://github.styleci.io/repos/156091175/shield?branch=1.x)](https://github.styleci.io/repos/156091175)
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/ctessier/nova-advanced-image-field.svg?style=flat-square)](https://packagist.org/packages/ctessier/nova-advanced-image-field)
-[![Total Downloads](https://img.shields.io/packagist/dm/ctessier/nova-advanced-image-field.svg?style=flat-square)](https://packagist.org/packages/ctessier/nova-advanced-image-field)
-[![License](https://img.shields.io/github/license/ctessier/nova-advanced-image-field?color=%23B2878B&style=flat-square)](https://packagist.org/packages/ctessier/nova-advanced-image-field)
-
 This package provides an advanced image field for Nova resources allowing you to upload, crop and resize any image.
 
 It uses [Cropper.js](https://fengyuanchen.github.io/cropperjs) with [vue-cropperjs](https://github.com/Agontuk/vue-cropperjs) in the frontend and [Intervention Image](http://image.intervention.io) in the backend.
 
-![screenshot of the advanced image field](https://github.com/ctessier/nova-advanced-image-field/blob/1.x/screenshot.png?raw=true)
+![screenshot of the advanced image field](https://gitlab.com/marshmallow-packages/nova/advanced-image/-/blob/master/screenshot.png?raw=true)
 
 ## Requirements
 
@@ -28,7 +23,7 @@ See [Intervention requirements](http://image.intervention.io/getting_started/ins
 Install the package into a Laravel application with Nova using Composer:
 
 ```bash
-composer require ctessier/nova-advanced-image-field
+composer require marshmallow/nova-advanced-image
 ```
 
 If you want to use Imagick as the default image processing library, follow the [Intervention documentation for Laravel](http://image.intervention.io/getting_started/installation#laravel).
@@ -44,7 +39,7 @@ This will provide you with a new configuration file where you can specify the dr
 namespace App\Nova;
 
 // ...
-use Ctessier\NovaAdvancedImageField\AdvancedImage;
+use Marshmallow\AdvancedImage\AdvancedImage;
 
 class Post extends Resource
 {
