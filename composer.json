@@ -1,0 +1,38 @@
+{
+    "name": "marshmallow/nova-advanced-image",
+    "description": "An advanced image field for Nova with crop and resize.",
+    "keywords": [
+        "laravel",
+        "nova",
+        "image",
+        "crop",
+        "resize",
+        "image crop",
+        "image resize",
+        "advanced",
+        "advanced image",
+        "advanced image field"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1.0",
+        "intervention/image": "^2.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Marshmallow\\AdvancedImage\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Marshmallow\\AdvancedImage\\FieldServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
