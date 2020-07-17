@@ -4,7 +4,7 @@ This package provides an advanced image field for Nova resources allowing you to
 
 It uses [Cropper.js](https://fengyuanchen.github.io/cropperjs) with [vue-cropperjs](https://github.com/Agontuk/vue-cropperjs) in the frontend and [Intervention Image](http://image.intervention.io) in the backend.
 
-![screenshot of the advanced image field](https://gitlab.com/marshmallow-packages/nova/advanced-image/-/blob/master/screenshot.png?raw=true)
+![screenshot of the advanced image field](https://gitlab.com/marshmallow-packages/nova/advanced-image/-/raw/master/screenshot.png)
 
 ## Requirements
 
