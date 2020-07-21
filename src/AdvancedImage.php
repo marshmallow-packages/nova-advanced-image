@@ -25,6 +25,8 @@ class AdvancedImage extends File
      */
     public $showOnIndex = true;
 
+    protected $customCallback;
+
     /**
      * Create a new field.
      *
@@ -69,6 +71,32 @@ class AdvancedImage extends File
         parent::fillAttribute($request, $requestAttribute, $model, $attribute);
 
         Storage::disk($this->disk)->delete($previousFileName);
+    }
+
+    public function setCustomCallback($customCallback)
+    {
+    	$this->customCallback = $customCallback;
+    	return $this;
+    }
+
+    protected function customCallback($request, $requestAttribute, $model, $attribute, $fileName)
+    {
+    	$customCallback = $this->customCallback;
+    	if ($customCallback) {
+    		$customCallback($request, $requestAttribute, $model, $attribute, $fileName);
+    	}
+    }
+
+    public function customThumbnail($callable)
+    {
+    	$this->thumbnail($callable);
+    	return $this;
+    }
+
+    public function customPreview($callable)
+    {
+    	$this->preview($callable);
+    	return $this;
     }
 
     /**
