@@ -2,10 +2,9 @@
 
 namespace Marshmallow\AdvancedImage;
 
-use Laravel\Nova\Fields\File;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Nova\Fields\File;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Marshmallow\AdvancedImage\TransformableImage;
 
 class AdvancedImage extends File
 {
@@ -75,28 +74,31 @@ class AdvancedImage extends File
 
     public function setCustomCallback($customCallback)
     {
-    	$this->customCallback = $customCallback;
-    	return $this;
+        $this->customCallback = $customCallback;
+
+        return $this;
     }
 
     protected function customCallback($request, $requestAttribute, $model, $attribute, $fileName)
     {
-    	$customCallback = $this->customCallback;
-    	if ($customCallback) {
-    		$customCallback($request, $requestAttribute, $model, $attribute, $fileName);
-    	}
+        $customCallback = $this->customCallback;
+        if ($customCallback) {
+            $customCallback($request, $requestAttribute, $model, $attribute, $fileName);
+        }
     }
 
     public function customThumbnail($callable)
     {
-    	$this->thumbnail($callable);
-    	return $this;
+        $this->thumbnail($callable);
+
+        return $this;
     }
 
     public function customPreview($callable)
     {
-    	$this->preview($callable);
-    	return $this;
+        $this->preview($callable);
+
+        return $this;
     }
 
     /**
@@ -107,7 +109,7 @@ class AdvancedImage extends File
     public function meta()
     {
         return array_merge([
-            'croppable'   => $this->croppable,
+            'croppable' => $this->croppable,
             'aspectRatio' => $this->cropAspectRatio,
         ], parent::meta());
     }

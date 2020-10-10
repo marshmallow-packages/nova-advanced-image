@@ -63,7 +63,7 @@ trait TransformableImage
      */
     public function driver(string $driver)
     {
-        if (!in_array($driver, ['gd', 'imagick'])) {
+        if (! in_array($driver, ['gd', 'imagick'])) {
             throw new \Exception("The driver \"$driver\" is not a valid Intervention driver.");
         }
 
@@ -119,7 +119,7 @@ trait TransformableImage
      */
     public function transformImage(UploadedFile $uploadedFile, $cropperData)
     {
-        if (!$this->croppable && !$this->width && !$this->height) {
+        if (! $this->croppable && ! $this->width && ! $this->height) {
             return;
         }
 
