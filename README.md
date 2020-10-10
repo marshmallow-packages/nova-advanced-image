@@ -2,7 +2,7 @@
 
 This package provides an advanced image field for Nova resources allowing you to upload, crop and resize any image. It uses [Cropper.js](https://fengyuanchen.github.io/cropperjs) with [vue-cropperjs](https://github.com/Agontuk/vue-cropperjs) in the frontend and [Intervention Image](http://image.intervention.io) in the backend.
 
-![screenshot of the advanced image field](https://gitlab.com/marshmallow-packages/nova/advanced-image/-/raw/master/screenshot.png)
+![screenshot of the advanced image field](https://raw.githubusercontent.com/marshmallow-packages/nova-advanced-image/master/screenshot.png)
 
 ## Requirements
 This package requires **one of** the following libraries:
