@@ -31,7 +31,7 @@
                 </span>
             </Button>
         </p>
-        <portal to="modals">
+        <!-- <portal to="modals">
             <transition name="fade">
                 <general-modal
                     v-if="removeModalOpen"
@@ -39,8 +39,8 @@
                     @close="closeModal"
                 />
             </transition>
-        </portal>
-<!--         <portal to="modals">
+        </portal> -->
+        <portal to="modals">
             <transition name="fade">
                 <confirm-upload-removal-modal
                     v-if="removeModalOpen"
@@ -48,7 +48,7 @@
                     @close="closeRemoveModal"
                 />
             </transition>
-        </portal> -->
+        </portal>
     </div>
 </template>
 
