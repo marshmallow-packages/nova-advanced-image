@@ -2,8 +2,8 @@
 
 namespace Marshmallow\AdvancedImage;
 
-use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Fields\File;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class AdvancedImage extends File
