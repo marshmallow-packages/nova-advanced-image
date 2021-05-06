@@ -16,7 +16,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.1|^8.0",
-        "marshmallow/intervention-image": "dev-master"
+        "intervention/image": "^2.5"
     },
     "autoload": {
         "psr-4": {
