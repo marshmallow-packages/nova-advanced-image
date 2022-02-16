@@ -65,11 +65,13 @@ class AdvancedImage extends File
 
         $previousFileName = $model->{$attribute};
 
-        $this->transformImage($request->{$this->attribute}, json_decode($request->{$this->attribute.'_data'}));
+        $this->transformImage($request->{$this->attribute}, json_decode($request->{$this->attribute . '_data'}));
 
         parent::fillAttribute($request, $requestAttribute, $model, $attribute);
 
-        Storage::disk($this->disk)->delete($previousFileName);
+        if ($previousFileName && !empty($previousFileName)) {
+            Storage::disk($this->disk)->delete($previousFileName);
+        }
     }
 
     public function setCustomCallback($customCallback)
