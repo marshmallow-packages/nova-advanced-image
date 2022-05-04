@@ -29,8 +29,8 @@ class NovaExtension {
                 __dirname,
                 "vendor/laravel/nova/resources/js/mixins/packages.js"
             ),
+            "@": path.resolve(__dirname, "resources/js/"),
         };
-
         webpackConfig.output = {
             uniqueName: this.name,
         };

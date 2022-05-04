@@ -14,8 +14,7 @@
             >
                 {{ field.value }}
 
-                <Button
-                    type="delete"
+                <DeleteButton
                     class="ml-auto"
                     v-if="shouldShowRemoveButton"
                     @click="confirmRemoval"
@@ -24,42 +23,26 @@
         </template>
 
         <p v-if="field.previewUrl" class="mt-3 flex items-center text-sm">
-            <Button
-                type="delete"
-                v-if="shouldShowRemoveButton"
-                @click="confirmRemoval"
-            >
+            <DeleteButton v-if="shouldShowRemoveButton" @click="confirmRemoval">
                 <span class="class ml-2 mt-1">
                     {{ __("Delete") }}
                 </span>
-            </Button>
+            </DeleteButton>
         </p>
-        <!-- <portal to="modals">
-            <transition name="fade">
-                <general-modal
-                    v-if="removeModalOpen"
-                    @confirm="removeFile"
-                    @close="closeModal"
-                />
-            </transition>
-        </portal> -->
-        <Portal to="modals">
-            <transition name="fade">
-                <confirm-upload-removal-modal
-                    v-if="removeModalOpen"
-                    @confirm="removeFile"
-                    @close="closeRemoveModal"
-                />
-            </transition>
-        </Portal>
+
+        <ConfirmUploadRemovalModal
+            :show="removeModalOpen"
+            @confirm="removeFile"
+            @close="closeRemoveModal"
+        />
     </div>
 </template>
 
 <script>
     import { Errors } from "laravel-nova";
 
-    import Button from "../Button/Button";
-    import ImageLoader from "./ImageLoader";
+    import Button from "@/components/Button/Button";
+    import ImageLoader from "@/components/Image/ImageLoader";
 
     export default {
         components: { Button, ImageLoader },

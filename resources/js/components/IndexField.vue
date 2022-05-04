@@ -4,7 +4,9 @@
             v-if="field.thumbnailUrl"
             :src="field.thumbnailUrl"
             style="object-fit: cover"
-            class="rounded-full w-8 h-8"
+            class="w-8 h-8"
+            :class="{ 'rounded-full': field.rounded, rounded: !field.rounded }"
+            :alt="field.name"
         />
         <span v-else>&mdash;</span>
     </p>

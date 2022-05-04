@@ -2,7 +2,7 @@
     <PanelItem :field="field">
         <div slot="value">
             <template v-if="shouldShowLoader">
-                <image-loader
+                <ImageLoader
                     :src="field.previewUrl"
                     class="max-w-xs"
                     @missing="(value) => (missing = value)"
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-    import ImageLoader from "./Image/ImageLoader";
+    import ImageLoader from "@/components/Image/ImageLoader";
 
     export default {
         props: ["field", "resourceId", "resourceName"],

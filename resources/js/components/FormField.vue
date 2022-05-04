@@ -1,7 +1,12 @@
 <template>
-    <DefaultField :field="field" :errors="errors">
-        <template slot="field">
-            <image-viewer
+    <DefaultField
+        :field="field"
+        :errors="errors"
+        :full-width-content="true"
+        :show-help-text="!isReadonly && showHelpText"
+    >
+        <template #field>
+            <ImageViewer
                 @image-deleted="imageDeleted"
                 v-show="!imgSrc"
                 :field="field"
@@ -10,9 +15,9 @@
                 :relatedResourceId="relatedResourceId"
                 :relatedResourceName="relatedResourceName"
                 :viaRelationship="viaRelationship"
-            ></image-viewer>
+            ></ImageViewer>
 
-            <vue-cropper
+            <VueCropper
                 v-if="field.croppable"
                 v-show="imgSrc"
                 class="mb-4"
@@ -20,14 +25,14 @@
                 :view-mode="1"
                 :aspect-ratio="field.aspectRatio || NaN"
                 :src="imgSrc"
-            ></vue-cropper>
+            ></VueCropper>
 
             <p v-if="imgSrc" class="mt-3 mb-6 flex items-center text-sm">
-                <Button type="restore" @click="cancel">
-                    <span class="class ml-2 mt-1">
+                <OutlineButton type="restore" @click="cancel">
+                    <span class="">
                         {{ __("Cancel") }}
                     </span>
-                </Button>
+                </OutlineButton>
             </p>
 
             <span class="form-file mr-4">
@@ -38,11 +43,12 @@
                     type="file"
                     :id="idAttr"
                     name="name"
+                    :accept="field.acceptedTypes"
                     @change="fileChange"
                 />
                 <label
                     :for="labelFor"
-                    class="form-file-btn btn btn-default btn-primary"
+                    class="shadow relative bg-primary-500 hover:bg-primary-400 active:bg-primary-600 text-white dark:text-gray-900 cursor-pointer rounded text-sm font-bold focus:outline-none focus:ring inline-flex items-center justify-center h-9 px-3 shadow relative bg-primary-500 hover:bg-primary-400 active:bg-primary-600 text-white dark:text-gray-900"
                 >
                     {{ imgSrc ? __("Change File") : __("Choose File") }}
                 </label>
@@ -63,8 +69,8 @@
     import VueCropper from "vue-cropperjs";
     import { FormField, HandlesValidationErrors, Errors } from "laravel-nova";
 
-    import Button from "./Button/Button";
-    import ImageViewer from "./Image/ImageViewer";
+    import Button from "@/components/Button/Button";
+    import ImageViewer from "@/components/Image/ImageViewer";
 
     export default {
         props: [
@@ -154,7 +160,6 @@
              * This event allows to update the `lastRetrievedAt` timestamp for further model changes
              */
             imageDeleted() {
-                console.log("delete");
                 this.$emit("file-deleted");
             },
         },

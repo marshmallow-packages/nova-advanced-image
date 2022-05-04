@@ -46,6 +46,13 @@ trait TransformableImage
     private $height;
 
     /**
+     * Indicates if the image is orientable.
+     *
+     * @var bool
+     */
+    private $autoOrientate = false;
+
+    /**
      * The Intervention Image instance.
      *
      * @var \Intervention\Image\Image
@@ -63,7 +70,7 @@ trait TransformableImage
      */
     public function driver(string $driver)
     {
-        if (! in_array($driver, ['gd', 'imagick'])) {
+        if (!in_array($driver, ['gd', 'imagick'])) {
             throw new \Exception("The driver \"$driver\" is not a valid Intervention driver.");
         }
 
@@ -110,6 +117,26 @@ trait TransformableImage
     }
 
     /**
+     * Specify if the underlying image should be orientated.
+     * Rotate the image to the orientation specified in Exif data, if any. Especially useful for smartphones.
+     * This method requires the exif extension to be enabled in your php settings.
+     *
+     * @throws \Exception
+     *
+     * @return $this
+     */
+    public function autoOrientate()
+    {
+        if (!extension_loaded('exif')) {
+            throw new \Exception('The PHP exif extension must be enabled to use the autoOrientate method.');
+        }
+
+        $this->autoOrientate = true;
+
+        return $this;
+    }
+
+    /**
      * Transform the uploaded file.
      *
      * @param \Illuminate\Http\UploadedFile $uploadedFile
@@ -119,11 +146,15 @@ trait TransformableImage
      */
     public function transformImage(UploadedFile $uploadedFile, $cropperData)
     {
-        if (! $this->croppable && ! $this->width && ! $this->height) {
+        if (!$this->croppable && !$this->width && !$this->height) {
             return;
         }
 
         $this->image = Image::make($uploadedFile->getPathName());
+
+        if ($this->autoOrientate) {
+            $this->orientateImage();
+        }
 
         if ($this->croppable && $cropperData) {
             $this->cropImage($cropperData);
@@ -160,5 +191,15 @@ trait TransformableImage
             $constraint->upsize();
             $constraint->aspectRatio();
         });
+    }
+
+    /**
+     * Orientate the image based on it's EXIF data.
+     *
+     * @return void
+     */
+    private function orientateImage()
+    {
+        $this->image->orientate();
     }
 }

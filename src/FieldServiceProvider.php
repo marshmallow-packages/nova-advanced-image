@@ -2,9 +2,9 @@
 
 namespace Marshmallow\AdvancedImage;
 
-use Laravel\Nova\Nova;
-use Laravel\Nova\Events\ServingNova;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Nova\Events\ServingNova;
+use Laravel\Nova\Nova;
 
 class FieldServiceProvider extends ServiceProvider
 {
@@ -17,7 +17,6 @@ class FieldServiceProvider extends ServiceProvider
     {
         Nova::serving(function (ServingNova $event) {
             Nova::script('advanced-image', __DIR__ . '/../dist/js/nova-advanced-image.js');
-            Nova::style('advanced-image', __DIR__ . '/../dist/css/nova-advanced-image.css');
         });
     }
 
