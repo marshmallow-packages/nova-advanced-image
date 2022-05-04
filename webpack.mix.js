@@ -1,14 +1,10 @@
-let mix = require('laravel-mix')
-let path = require('path');
+let mix = require("laravel-mix");
+let path = require("path");
 
-mix.setPublicPath('dist')
-    .vue()
-    .js('resources/js/field.js', 'js')
-    .sass('resources/sass/field.scss', 'css')
-    .webpackConfig({
-       resolve: {
-            alias: {
-                '@': path.resolve(__dirname, 'resources/js/'),
-            },
-        },
-    });
+require("./mix");
+
+mix.setPublicPath("dist")
+    .js("resources/js/field.js", "dist/js/nova-advanced-image.js")
+    .sass("resources/sass/field.scss", "dist/css/nova-advanced-image.css")
+    .vue({ version: 3 })
+    .nova("marshmallow/nova-advanced-image");

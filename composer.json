@@ -15,14 +15,21 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.1|^8.0",
-        "intervention/image": "^2.5"
+        "php": "^8.0",
+        "intervention/image": "^2.5",
+        "laravel/nova": "^4.0"
     },
     "autoload": {
         "psr-4": {
             "Marshmallow\\AdvancedImage\\": "src/"
         }
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://nova.laravel.com"
+        }
+    ],
     "extra": {
         "laravel": {
             "providers": [

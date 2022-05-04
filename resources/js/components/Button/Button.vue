@@ -12,12 +12,12 @@
 </template>
 
 <script>
-export default {
-    props: {
-        type: {
-            type: String,
-            default: 'delete',
+    export default {
+        props: {
+            type: {
+                type: String,
+                default: "delete",
+            },
         },
-    },
-}
+    };
 </script>
