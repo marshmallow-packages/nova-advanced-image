@@ -1,6 +1,6 @@
 <template>
     <PanelItem :field="field">
-        <div slot="value">
+        <template #value>
             <template v-if="shouldShowLoader">
                 <ImageLoader
                     :src="field.previewUrl"
@@ -37,7 +37,7 @@
                     </span>
                 </a>
             </p>
-        </div>
+        </template>
     </PanelItem>
 </template>
 
