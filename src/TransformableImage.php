@@ -164,7 +164,7 @@ trait TransformableImage
             $this->resizeImage();
         }
 
-        $this->image->save();
+        $this->image->save(null,null,'png');
         $this->image->destroy();
     }
 
