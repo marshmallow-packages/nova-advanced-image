@@ -2,6 +2,7 @@
 
 namespace Marshmallow\AdvancedImage;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
 use Intervention\Image\Facades\Image;
 
@@ -164,7 +165,12 @@ trait TransformableImage
             $this->resizeImage();
         }
 
-        $this->image->save();
+        $clientExtension = $uploadedFile->clientExtension();
+        if (!filled($clientExtension)) {
+            $clientExtension = null;
+        }
+
+        $this->image->save(null, null, $clientExtension);
         $this->image->destroy();
     }
 
