@@ -74,6 +74,7 @@ class AdvancedImage extends Image
         if ($previousFileName && !empty($previousFileName)) {
             Storage::disk($this->disk)->delete($previousFileName);
         }
+        return array();
     }
 
     public function setCustomCallback($customCallback)
