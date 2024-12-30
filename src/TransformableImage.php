@@ -2,9 +2,10 @@
 
 namespace Marshmallow\AdvancedImage;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\Drivers\Imagick\Driver;
+use Intervention\Image\Drivers\GD\Driver as GDDriver;
+use Intervention\Image\ImageManager;
 
 trait TransformableImage
 {
@@ -141,21 +142,23 @@ trait TransformableImage
      * Transform the uploaded file.
      *
      * @param \Illuminate\Http\UploadedFile $uploadedFile
-     * @param object|null                   $cropperData
+     * @param object|null $cropperData
      *
      * @return void
      */
-    public function transformImage(UploadedFile $uploadedFile, $cropperData)
+    public function transformImage(UploadedFile $uploadedFile, ?object $cropperData): void
     {
         if (!$this->croppable && !$this->width && !$this->height) {
             return;
         }
 
-        $this->image = Image::make($uploadedFile->getPathName());
+        $manager = new ImageManager(
+            $this->driver === 'gd' ? GDDriver::class : Driver::class,
+            autoOrientation: $this->autoOrientate,
+        );
 
-        if ($this->autoOrientate) {
-            $this->orientateImage();
-        }
+        // open an image file
+        $this->image = $manager->read($uploadedFile->getPathName());
 
         if ($this->croppable && $cropperData) {
             $this->cropImage($cropperData);
@@ -171,7 +174,8 @@ trait TransformableImage
         }
 
         $this->image->save(null, null, $clientExtension);
-        $this->image->destroy();
+
+        unset($this->image);
     }
 
     /**
@@ -181,7 +185,7 @@ trait TransformableImage
      *
      * @return void
      */
-    private function cropImage(object $cropperData)
+    private function cropImage(object $cropperData): void
     {
         $this->image->crop($cropperData->width, $cropperData->height, $cropperData->x, $cropperData->y);
     }
@@ -191,21 +195,8 @@ trait TransformableImage
      *
      * @return void
      */
-    private function resizeImage()
+    private function resizeImage(): void
     {
-        $this->image->resize($this->width, $this->height, function ($constraint) {
-            $constraint->upsize();
-            $constraint->aspectRatio();
-        });
-    }
-
-    /**
-     * Orientate the image based on it's EXIF data.
-     *
-     * @return void
-     */
-    private function orientateImage()
-    {
-        $this->image->orientate();
+        $this->image->scale($this->width, $this->height);
     }
 }
