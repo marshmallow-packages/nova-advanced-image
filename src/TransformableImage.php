@@ -4,7 +4,7 @@ namespace Marshmallow\AdvancedImage;
 
 use Illuminate\Http\UploadedFile;
 use Intervention\Image\Drivers\Imagick\Driver;
-use Intervention\Image\Drivers\GD\Driver as GDDriver;
+use Intervention\Image\Drivers\Gd\Driver as GDDriver;
 use Intervention\Image\ImageManager;
 
 trait TransformableImage
