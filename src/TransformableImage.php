@@ -57,7 +57,7 @@ trait TransformableImage
     /**
      * The Intervention Image instance.
      *
-     * @var \Intervention\Image\Image
+     * @var \Intervention\Image\Interfaces\ImageInterface
      */
     private $image;
 
