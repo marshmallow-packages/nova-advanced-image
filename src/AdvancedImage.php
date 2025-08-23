@@ -73,7 +73,7 @@ class AdvancedImage extends Image
             Storage::disk($this->disk)->delete($previousFileName);
         }
 
-        return parent::fillAttribute($request, $requestAttribute, $model, $attribute)
+        return parent::fillAttribute($request, $requestAttribute, $model, $attribute);
     }
 
     public function setCustomCallback($customCallback)
