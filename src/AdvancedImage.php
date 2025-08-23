@@ -69,11 +69,11 @@ class AdvancedImage extends Image
 
         $this->transformImage($request->{$this->attribute}, json_decode($request->{$this->attribute . '_data'}));
 
-        parent::fillAttribute($request, $requestAttribute, $model, $attribute);
-
         if ($previousFileName) {
             Storage::disk($this->disk)->delete($previousFileName);
         }
+
+        return parent::fillAttribute($request, $requestAttribute, $model, $attribute)
     }
 
     public function setCustomCallback($customCallback)
