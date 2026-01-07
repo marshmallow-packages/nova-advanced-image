@@ -10,8 +10,8 @@
         "production": "mix --production"
     },
     "devDependencies": {
+        "@vue/babel-plugin-jsx": "^2.0.1",
         "@inertiajs/vue3": "^2.0.0",
-        "@vue/babel-plugin-jsx": "^1.1.1",
         "@vue/compiler-sfc": "^3.2.33",
         "cross-env": "^10.0.0",
         "form-backend-validation": "^2.3.3",
