@@ -59,21 +59,21 @@ class AdvancedImage extends Image
      *
      * @return void
      */
-    protected function fillAttribute(NovaRequest $request, $requestAttribute, $model, $attribute)
+    protected function fillAttribute(NovaRequest $request, string $requestAttribute, object $model, string $attribute): mixed
     {
         if (empty($request->{$requestAttribute})) {
-            return;
+            return null;
         }
 
         $previousFileName = $model->{$attribute};
 
         $this->transformImage($request->{$this->attribute}, json_decode($request->{$this->attribute . '_data'}));
 
-        parent::fillAttribute($request, $requestAttribute, $model, $attribute);
-
-        if ($previousFileName && !empty($previousFileName)) {
+        if ($previousFileName) {
             Storage::disk($this->disk)->delete($previousFileName);
         }
+
+        return parent::fillAttribute($request, $requestAttribute, $model, $attribute);
     }
 
     public function setCustomCallback($customCallback)

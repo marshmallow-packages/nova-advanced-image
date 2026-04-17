@@ -28,7 +28,7 @@
             ></VueCropper>
 
             <p v-if="imgSrc" class="mt-3 mb-6 flex items-center text-sm">
-                <OutlineButton type="restore" @click="cancel">
+                <OutlineButton type="button" @click="cancel">
                     <span class="">
                         {{ __("Cancel") }}
                     </span>

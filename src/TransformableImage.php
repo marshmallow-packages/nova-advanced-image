@@ -3,7 +3,9 @@
 namespace Marshmallow\AdvancedImage;
 
 use Illuminate\Http\UploadedFile;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\Drivers\Imagick\Driver;
+use Intervention\Image\Drivers\Gd\Driver as GDDriver;
+use Intervention\Image\ImageManager;
 
 trait TransformableImage
 {
@@ -55,7 +57,7 @@ trait TransformableImage
     /**
      * The Intervention Image instance.
      *
-     * @var \Intervention\Image\Image
+     * @var \Intervention\Image\Interfaces\ImageInterface
      */
     private $image;
 
@@ -140,21 +142,23 @@ trait TransformableImage
      * Transform the uploaded file.
      *
      * @param \Illuminate\Http\UploadedFile $uploadedFile
-     * @param object|null                   $cropperData
+     * @param object|null $cropperData
      *
      * @return void
      */
-    public function transformImage(UploadedFile $uploadedFile, $cropperData)
+    public function transformImage(UploadedFile $uploadedFile, ?object $cropperData): void
     {
         if (!$this->croppable && !$this->width && !$this->height) {
             return;
         }
 
-        $this->image = Image::make($uploadedFile->getPathName());
+        $manager = new ImageManager(
+            $this->driver === 'gd' ? GDDriver::class : Driver::class,
+            autoOrientation: $this->autoOrientate,
+        );
 
-        if ($this->autoOrientate) {
-            $this->orientateImage();
-        }
+        // open an image file
+        $this->image = $manager->read($uploadedFile->getPathName());
 
         if ($this->croppable && $cropperData) {
             $this->cropImage($cropperData);
@@ -164,8 +168,14 @@ trait TransformableImage
             $this->resizeImage();
         }
 
-        $this->image->save();
-        $this->image->destroy();
+        $clientExtension = $uploadedFile->clientExtension();
+        if (!filled($clientExtension)) {
+            $clientExtension = null;
+        }
+
+        $this->image->save(null, null, $clientExtension);
+
+        unset($this->image);
     }
 
     /**
@@ -175,7 +185,7 @@ trait TransformableImage
      *
      * @return void
      */
-    private function cropImage(object $cropperData)
+    private function cropImage(object $cropperData): void
     {
         $this->image->crop($cropperData->width, $cropperData->height, $cropperData->x, $cropperData->y);
     }
@@ -185,21 +195,8 @@ trait TransformableImage
      *
      * @return void
      */
-    private function resizeImage()
+    private function resizeImage(): void
     {
-        $this->image->resize($this->width, $this->height, function ($constraint) {
-            $constraint->upsize();
-            $constraint->aspectRatio();
-        });
-    }
-
-    /**
-     * Orientate the image based on it's EXIF data.
-     *
-     * @return void
-     */
-    private function orientateImage()
-    {
-        $this->image->orientate();
+        $this->image->scale($this->width, $this->height);
     }
 }
